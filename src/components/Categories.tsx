@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
-import { selectFilter } from '../redax/slices/filterSlice';
-import { selectPizzeData } from '../redax/slices/pizzaSlice';
+import { useSelector } from "react-redux";
+import { selectFilter } from "../redax/slices/filterSlice";
+import { selectPizzeData } from "../redax/slices/pizzaSlice";
 
 type CategoriesProps = {
-  onClickCategory: any;
+  onClickCategory: (i: number) => void;
 };
 
 const Categories: React.FC<CategoriesProps> = ({ onClickCategory }) => {
@@ -11,12 +11,12 @@ const Categories: React.FC<CategoriesProps> = ({ onClickCategory }) => {
   const { status } = useSelector(selectPizzeData);
 
   const categories = [
-    'Все',
-    'Мясные',
-    'Вегетарианская',
-    'Гриль',
-    'Острые',
-    'Закрытые',
+    "Все",
+    "Мясные",
+    "Вегетарианская",
+    "Гриль",
+    "Острые",
+    "Закрытые",
   ];
 
   return (
@@ -27,7 +27,7 @@ const Categories: React.FC<CategoriesProps> = ({ onClickCategory }) => {
             key={i}
             onClick={() => onClickCategory(i)}
             className={
-              categoryId === i ? (status === 'loading' ? '' : 'active') : ''
+              categoryId === i ? (status === "loading" ? "" : "active") : ""
             }
           >
             {values}
