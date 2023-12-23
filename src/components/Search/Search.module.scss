@@ -1,0 +1,27 @@
+.root {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 12px 20px;
+  width: 300px;
+  border-radius: 10px;
+  font-size: 16px;
+  &:focus {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+}
+
+.contener {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 400px;
+  img {
+    width: 30px;
+    position: relative;
+    left: -40px;
+    opacity: 0.8;
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+}
