@@ -1,20 +1,24 @@
-import React from 'react';
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectFilterSort, setSort } from '../redax/slices/filterSlice';
+import React from "react";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectFilterSort, setSort } from "../redax/slices/filterSlice";
 
 type SortItem = {
   name: string;
   sort: string;
 };
 
+// type PopapClick = React.MouseEvent<HTMLBodyElement> & {
+//   path: Node[];
+// };
+
 export const list: SortItem[] = [
-  { name: 'популярности (DESC)', sort: 'rating' },
-  { name: 'популярности (ASC)', sort: '-rating' },
-  { name: 'цене (DESC)', sort: 'price' },
-  { name: 'цене (ASC)', sort: '-price' },
-  { name: 'алфавиту (DESC)', sort: 'title' },
-  { name: 'алфавиту (ASC)', sort: '-title' },
+  { name: "популярности (DESC)", sort: "rating" },
+  { name: "популярности (ASC)", sort: "-rating" },
+  { name: "цене (DESC)", sort: "price" },
+  { name: "цене (ASC)", sort: "-price" },
+  { name: "алфавиту (DESC)", sort: "title" },
+  { name: "алфавиту (ASC)", sort: "-title" },
 ];
 
 export function Sort() {
@@ -29,16 +33,20 @@ export function Sort() {
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      let path = event.path || (event.composedPath && event.composedPath());
-      if (!path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as MouseEvent & {
+        path: Node[];
+      };
+      let path = _event.path;
+      //|| (event.composedPath && event.composedPath());
+      if (sortRef.current && !path.includes(sortRef.current)) {
         setOpen(false);
       }
     };
 
-    document.body.addEventListener('click', handleClickOutside);
+    document.body.addEventListener("click", handleClickOutside);
     return () => {
-      document.body.removeEventListener('click', handleClickOutside);
+      document.body.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
@@ -67,7 +75,7 @@ export function Sort() {
               <li
                 key={i}
                 onClick={() => onClickListItem(obj)}
-                className={sort.sort === obj.sort ? 'active' : ''}
+                className={sort.sort === obj.sort ? "active" : ""}
               >
                 {obj.name}
               </li>
