@@ -1,7 +1,6 @@
-import React from 'react';
 import NodFaundBlock from '../components/NodFaundBlock';
 
-const NodFaund = () => {
+const NodFaund: React.FC = () => {
   return <NodFaundBlock />;
 };
 

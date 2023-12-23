@@ -14,14 +14,14 @@ import {
 } from '../redax/slices/filterSlice';
 import { fetchPizzas, selectPizzeData } from '../redax/slices/pizzaSlice';
 
-import Categories from '.././components/Categories';
-import { Sort, list } from '.././components/Sort';
-import PizzaBlock from '.././components/pizzablock';
-import MyLoader from '.././components/pizzablock/sceleton'; //скелетон
+import Categories from '../components/Categories';
+import { Sort, list } from '../components/Sort';
+import PizzaBlock from '../components/pizzablock';
+import MyLoader from '../components/pizzablock/sceleton'; //скелетон
 import Pagination from '../components/Pagination';
 // import pizzas from '.././assetc/pizze.json';
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
@@ -34,11 +34,11 @@ const Home = () => {
   //const [items, setItems] = React.useState([]);
   // const [isLoading, setIsLoading] = React.useState(true);
 
-  const onClickCategory = (id) => {
+  const onClickCategory = (id: number) => {
     dispatch(setCategoryId(id));
   };
 
-  const onChangePage = (number) => {
+  const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
@@ -48,6 +48,7 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
+      //@ts-ignore
       fetchPizzas({
         sort,
         order,
@@ -99,7 +100,7 @@ const Home = () => {
     //   }
     //   return false;
     // })
-    .map((obj, i) => (
+    .map((obj: any, i: number) => (
       <Link key={obj.id} to={`/pizza/${obj.id}`}>
         <PizzaBlock {...obj} />
       </Link>
