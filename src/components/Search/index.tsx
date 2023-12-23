@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import debounce from 'lodash.debounce';
 
 import style from './Search.module.scss';
@@ -12,12 +12,11 @@ export default function Search() {
   const { searchValue } = useSelector(selectFilter);
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('');
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onClickClear = () => {
     dispatch(setSearchValue(''));
-    // document.querySelector('input').focus();
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const updateSearchValue = React.useCallback(
@@ -27,15 +26,10 @@ export default function Search() {
     []
   );
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event:any) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
-
-  React.useEffect(() => {
-    //console.log(document.querySelector('input'));
-    document.querySelector('input');
-  }, []);
 
   return (
     <div className={style.contener}>
