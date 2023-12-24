@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 type CartItem = {
   id: string;
@@ -7,6 +8,7 @@ type CartItem = {
   imageUrl: string;
   type: number;
   size: number;
+  count: number;
 };
 
 interface CartSliceState {
@@ -51,8 +53,8 @@ const cartSlice = createSlice({
   },
 });
 
-export const selectCart = (state) => state.cart;
-export const selectCartItemDyId = (id) => (state) =>
+export const selectCart = (state: RootState) => state.cart;
+export const selectCartItemDyId = (id: string) => (state: RootState) =>
   state.cart.items.find((obj) => obj.id === id);
 
 export const { clearItem, removeItem, addItem, minusItem } = cartSlice.actions;
