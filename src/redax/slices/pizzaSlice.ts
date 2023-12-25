@@ -12,26 +12,38 @@ type PizzaItem = {
   count: number;
 };
 
-type FetchPizzas = Record<string, string>;
+type FetchPizzas = {
+  sortId: string;
+  order: string;
+  category: string;
+  search: string;
+  currentPage: number;
+};
 
 export const fetchPizzas = createAsyncThunk<PizzaItem[], FetchPizzas>(
   'pizza/fetchPizzasStatus',
-  async ({ sort, order, category, search, currentPage }) => {
+  async ({ sortId, order, category, search, currentPage }) => {
     const { data } = await axios.get<PizzaItem[]>(
-      `https://63c844465c0760f69ac8e732.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sort}&order=${order}${search}`
+      `https://63c844465c0760f69ac8e732.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortId}&order=${order}${search}`
     );
     return data;
   }
 );
 
+enum Status {
+  LOADING = 'loading',
+  SUCCES = 'succes',
+  ERROR = 'error',
+}
+
 interface PizzaSlice {
   items: PizzaItem[];
-  status: 'loading' | 'succes' | 'error';
+  status: Status;
 }
 
 const initialState: PizzaSlice = {
   items: [],
-  status: 'loading',
+  status: Status.LOADING,
 };
 
 const pizzaSlice = createSlice({
@@ -58,15 +70,15 @@ const pizzaSlice = createSlice({
   // },
   extraReducers: (builder) => {
     builder.addCase(fetchPizzas.pending, (state) => {
-      state.status = 'loading';
+      state.status = Status.LOADING;
       state.items = [];
     });
     builder.addCase(fetchPizzas.fulfilled, (state, { payload }) => {
       state.items = payload;
-      state.status = 'succes';
+      state.status = Status.SUCCES;
     });
     builder.addCase(fetchPizzas.rejected, (state) => {
-      state.status = 'error';
+      state.status = Status.ERROR;
       state.items = [];
     });
   },
