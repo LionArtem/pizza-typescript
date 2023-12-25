@@ -46,11 +46,12 @@ const Home: React.FC = () => {
     const order = sort.sort.includes('-') ? 'asc' : 'desc';
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
+    const sortId = sort.sort.replace('-', '');
 
     dispatch(
       //@ts-ignore
       fetchPizzas({
-        sort,
+        sortId,
         order,
         category,
         search,
