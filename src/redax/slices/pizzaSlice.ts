@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
+import { SortPropertyEnam } from './filterSlice';
 
 type PizzaItem = {
   id: string;
@@ -12,15 +13,17 @@ type PizzaItem = {
   count: number;
 };
 
-type FetchPizzas = {
+export type FetchPizzasParams = {
   sortId: string;
   order: string;
   category: string;
   search: string;
   currentPage: number;
+  sortProperty?: string;
+  sort?: SortPropertyEnam;
 };
 
-export const fetchPizzas = createAsyncThunk<PizzaItem[], FetchPizzas>(
+export const fetchPizzas = createAsyncThunk<PizzaItem[], FetchPizzasParams>(
   'pizza/fetchPizzasStatus',
   async ({ sortId, order, category, search, currentPage }) => {
     const { data } = await axios.get<PizzaItem[]>(

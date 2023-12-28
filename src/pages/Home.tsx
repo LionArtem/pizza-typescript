@@ -12,18 +12,23 @@ import {
   setCurrentPage,
   setFilters,
 } from '../redax/slices/filterSlice';
-import { fetchPizzas, selectPizzeData } from '../redax/slices/pizzaSlice';
+import {
+  fetchPizzas,
+  selectPizzeData,
+  FetchPizzasParams,
+} from '../redax/slices/pizzaSlice';
 
 import Categories from '../components/Categories';
 import { Sort, list } from '../components/Sort';
 import PizzaBlock from '../components/pizzablock';
 import MyLoader from '../components/pizzablock/sceleton'; //скелетон
 import Pagination from '../components/Pagination';
+import { useAppDispatch } from '../redax/store';
 // import pizzas from '.././assetc/pizze.json';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
@@ -49,7 +54,6 @@ const Home: React.FC = () => {
     const sortId = sort.sort.replace('-', '');
 
     dispatch(
-      //@ts-ignore
       fetchPizzas({
         sortId,
         order,
@@ -75,14 +79,26 @@ const Home: React.FC = () => {
 
   React.useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params = qs.parse(
+        window.location.search.substring(1)
+      ) as unknown as FetchPizzasParams;
+
       const sort = list.find((obj) => obj.sort === params.sortProperty);
+
+      // if (sort) {
+      //   params.sort = sort;
+      // }
+
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          sort: sort ? sort : list[0],
+          // order: params.order,
+          categoryId: Number(params.category),
+          searchValue: params.search,
+          currentPage: params.currentPage,
         })
       );
+
       isSearch.current = true;
     }
   }, []);

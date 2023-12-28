@@ -1,11 +1,15 @@
-import React from "react";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { selectFilterSort, setSort } from "../redax/slices/filterSlice";
+import React from 'react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  SortPropertyEnam,
+  selectFilterSort,
+  setSort,
+} from '../redax/slices/filterSlice';
 
 type SortItem = {
   name: string;
-  sort: string;
+  sort: SortPropertyEnam;
 };
 
 // type PopapClick = React.MouseEvent<HTMLBodyElement> & {
@@ -13,12 +17,12 @@ type SortItem = {
 // };
 
 export const list: SortItem[] = [
-  { name: "популярности (DESC)", sort: "rating" },
-  { name: "популярности (ASC)", sort: "-rating" },
-  { name: "цене (DESC)", sort: "price" },
-  { name: "цене (ASC)", sort: "-price" },
-  { name: "алфавиту (DESC)", sort: "title" },
-  { name: "алфавиту (ASC)", sort: "-title" },
+  { name: 'популярности (DESC)', sort: SortPropertyEnam.PRICE_DESC },
+  { name: 'популярности (ASC)', sort: SortPropertyEnam.PRICE_ASC },
+  { name: 'цене (DESC)', sort: SortPropertyEnam.PRICE_DESC },
+  { name: 'цене (ASC)', sort: SortPropertyEnam.PRICE_ASC },
+  { name: 'алфавиту (DESC)', sort: SortPropertyEnam.TITLE_DESC },
+  { name: 'алфавиту (ASC)', sort: SortPropertyEnam.TITLE_ASC },
 ];
 
 export function Sort() {
@@ -44,9 +48,9 @@ export function Sort() {
       }
     };
 
-    document.body.addEventListener("click", handleClickOutside);
+    document.body.addEventListener('click', handleClickOutside);
     return () => {
-      document.body.removeEventListener("click", handleClickOutside);
+      document.body.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
@@ -75,7 +79,7 @@ export function Sort() {
               <li
                 key={i}
                 onClick={() => onClickListItem(obj)}
-                className={sort.sort === obj.sort ? "active" : ""}
+                className={sort.sort === obj.sort ? 'active' : ''}
               >
                 {obj.name}
               </li>
