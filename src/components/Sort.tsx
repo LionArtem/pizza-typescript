@@ -42,8 +42,9 @@ export function Sort() {
         path: Node[];
       };
       let path = _event.path;
+
       //|| (event.composedPath && event.composedPath());
-      if (sortRef.current && !path.includes(sortRef.current)) {
+      if (sortRef.current && path && !path.includes(sortRef.current)) {
         setOpen(false);
       }
     };
